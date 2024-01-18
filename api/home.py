@@ -243,7 +243,7 @@ def recordanswer(answer,current_question):
     elif current_question==21:
         sc=score()
         print(sc)
-        if sc>=0 and sc<=13:
+        if sc>=0 and sc<=18:
             m_intent=intent(answer)
             l=['happy','depression','anxiety','sleeping disorder','paranoia','personality_disorder','substance_abuse']
             if m_intent in l:
