@@ -13,7 +13,8 @@ function type() {
     setTimeout(type, speed);
   }
 }
-type()
+type();
+msgerChat.scrollTop = msgerChat.scrollHeight;
 }
    
     // Icons made by Freepik from www.flaticon.com
@@ -21,7 +22,7 @@ type()
     const PERSON_IMG = "https://image.flaticon.com/icons/svg/145/145867.svg";
     const BOT_NAME = "    ChatBot";
     const PERSON_NAME = "You";
-    const msgText = "Hi, welcome to ChatBot! Go ahead and send me a message. 😄";
+    const msgText = "Welcome to MindHaven! If you're not comfortable with chatting, click on BOOK icon on the left.😄";
     var n=1;
     appendMessage(BOT_NAME, BOT_IMG, "left",msgText,n);
     typeWriter(msgText,n);
