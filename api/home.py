@@ -119,7 +119,7 @@ def predict_(x):
     # tfidf = vectorizer.transform([x])
     # preds = model.predict(tfidf)
     #probab = model.predict_proba(tfidf)[0][preds]
-    probab=Textblob(x).sentiment.polarity
+    probab=TextBlob(x).sentiment.polarity
     #print(preds,probab)
     feeling(probab)
     return probab
