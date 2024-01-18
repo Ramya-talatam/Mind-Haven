@@ -2,7 +2,7 @@ Flask==2.3.2
 Flask-Login==0.6.2
 Flask-WTF==1.1.1
 Werkzeug==2.3.4
-nltk==3.7
+Flask-SQLAlchemy
 textblob==0.17.1
 pymongo==4.6.0
 tokenizers==0.14.0
