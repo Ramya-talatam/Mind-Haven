@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify
+nfrom flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime, timedelta
@@ -165,7 +165,7 @@ questions = ["hi",
 "Feeling tired or having little energy",
 "Feeling bad about yourself - or that you are a failure or have let yourself or your family down",
 "Thank you for taking the assessment!",
-"Please make sure that you keep checking in with me. What's your mood now after opening up?",
+"Please explain your problem as clear as possible. What kind of problems you are facing?",
 "Please ask me for help whenever you feel like it! I'm always online.",
 "Gosh, that is tough... I am sorry to hear that. Here is a thought that might motivate you! There you go...let it all slide out.Unhappiness cannot stick in a person's soul when it's slick with tear.",
 "Gosh, that is tough... I am sorry to hear that. Here is a thought that might motivate you! Take a deep breath, listen to your thoughts, try to figure them out. Then take things one day at a time.",
