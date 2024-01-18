@@ -1,100 +1,55 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Chatbot</title>
-    <style>
-        /* Add your custom CSS styles here */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-        }
+{% extends "botindex.html" %}
+{% block content %}
+<section id="journal" class="journal" style="display: none;">
+	<div class="book">
+		<div class="book-cover">
+			<div>
+				<h1>Dear Diary</h1>
+				<div class="separator"></div>
+				<h2>your personal journal</h2>
+			</div>
+		</div>
+		<div class="book-content">
+			<h3> write your diary </h3>
+            <textarea id="journalInput" placeholder="Type your journal entry here..."></textarea>
+            <button  onclick="analyzeJournal()">Analyze</button>
+            <div class="report" id="report"></div>
+		</div>
+	</div>  
+</section>
+  <!-- partial:index.partial.html -->
+  <section id="msger" class="msger">
+    <header class="msger-header">
+      <div class="msger-header-title">
+        <i class="fas fa-bug"></i> Chatbot <i class="fas fa-bug"></i>
+      </div>
+    </header>
 
-        .chat-container {
-            border: 1px solid #ccc;
-            padding: 10px;
-            height: 400px;
-            overflow-y: scroll;
-        }
-
-        .user-message {
-            background-color: #f1f1f1;
-            padding: 10px;
-            margin-bottom: 10px;
-            text-align: right;
-        }
-
-        .bot-message {
-            background-color: #e2f3ff;
-            padding: 10px;
-            margin-bottom: 10px;
-        }
-
-        input[type="text"] {
-            width: 100%;
-            padding: 10px;
-            margin-top: 10px;
-            box-sizing: border-box;
-        }
-    </style>
-</head>
-<body>
-    <h1>Chatbot</h1>
-    <div class="chat-container" id="chat-container"></div>
-    <input type="text" id="user-input" placeholder="Enter your message...">
-    
-    <script>
-        // Add your JavaScript code here
-        const chatContainer = document.getElementById('chat-container');
-        const userInput = document.getElementById('user-input');
-
-        function addUserMessage(message) {
-            const userMessageElement = document.createElement('div');
-            userMessageElement.classList.add('user-message');
-            userMessageElement.textContent = message;
-            chatContainer.appendChild(userMessageElement);
-        }
-
-        function addBotMessage(message) {
-            const botMessageElement = document.createElement('div');
-            botMessageElement.classList.add('bot-message');
-            botMessageElement.textContent = message;
-            chatContainer.appendChild(botMessageElement);
-        }
-
-        function handleUserInput(event) {
-            if (event.key === 'Enter') {
-                const userMessage = userInput.value;
-                if (userMessage.trim() !== '') {
-                    addUserMessage(userMessage);
-                    sendUserMessage(userMessage);
-                    userInput.value = '';
-                }
+    <main class="msger-chat">
+      
+    </main>
+    <form class="msger-inputarea">
+      <input type="text" class="msger-input" id="textInput" placeholder="Enter your message...">
+      <button type="submit" class="msger-send-btn">Send</button>
+    </form>
+  </section>
+  <!-- partial -->
+  <script src='https://use.fontawesome.com/releases/v5.0.13/js/all.js'></script>
+  <script>
+    document.getElementById('journal-icon').addEventListener('click', function() {
+      event.preventDefault();
+            if(document.getElementById('journal').style.display == 'none'){
+              document.getElementById('diary-icon').src= "../static/image/icon_calendar.png";
+              document.getElementById('journal').style.display = 'flex';
+              document.getElementById('msger').style.display = 'none';
             }
-        }
-
-        function sendUserMessage(message) {
-            // Make an AJAX request to your backend API with the user's message
-            // In this example, we're using the Fetch API
-            fetch('/chat', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ message: message })
-            })
-            .then(response => response.json())
-            .then(data => {
-                // Handle the response from the server
-                const botResponse = data.response;
-                addBotMessage(botResponse);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        }
-
-        userInput.addEventListener('keydown', handleUserInput);
-    </script>
-</body>
-</html>
+            else{
+              document.getElementById('journal').style.display = 'none';
+              document.getElementById('diary-icon').src= "../static/image/icon_diary.png";
+              document.getElementById('msger').style.display = 'flex';
+            }
+            
+        });
+  </script>
+<script src="../static/js/chat.js"></script>
+{% endblock %}
