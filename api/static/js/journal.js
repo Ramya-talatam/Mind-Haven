@@ -2,7 +2,7 @@ function analyzeJournal() {
     var journalText = document.getElementById("journalInput").value;
     var reportElement = document.getElementById("report");
     reportElement.innerHTML = "";
-    const journalApi = https://mind-haven.vercel.app/analyze;
+    const journalApi = 'https://mind-haven.vercel.app/analyze';
     // const journalApi = '/analyze';
     // Send journal text to server for analysis
     fetch(journalApi, {
