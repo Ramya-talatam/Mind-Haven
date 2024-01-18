@@ -20,7 +20,7 @@ $(document).ready(function() {
     document.getElementById('theme-select').value=theme;
     }
     else{
-      document.getElementById('theme-link').href ="{{ url_for('static', filename='css/winterfrost.css') }}";
+      document.getElementById('theme-link').href ='/static/css/winterfrost.css';
     }
 });
 window.addEventListener('load', function () {
