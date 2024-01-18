@@ -3,7 +3,7 @@ function analyzeJournal() {
     var reportElement = document.getElementById("report");
     reportElement.innerHTML = "";
     // const journalApi = 'https://mh-backend-xi.vercel.app/analyze';
-    const journalApi = 'http://127.0.0.1:5000/analyze';
+    const journalApi = '/analyze';
     // Send journal text to server for analysis
     fetch(journalApi, {
         method: 'POST',
