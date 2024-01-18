@@ -3,10 +3,9 @@ from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime, timedelta
 import re
-from textblob.classifiers import NaiveBayesClassifier as nb
+# from textblob.classifiers import NaiveBayesClassifier as nb
 import string
-import nltk
-nltk.download('punkt')
+
 def custom_tokenize(text):
     blob = TextBlob(text)
     words = [word.lower() for word in blob.words if word not in string.punctuation]
@@ -54,7 +53,7 @@ train_data = [
     ("no way!", "no")
 ]
 
-classifier = nb(train_data)
+# classifier = nb(train_data)
 
 message=""
 q=""
@@ -207,9 +206,9 @@ def recordanswer(answer,current_question):
         sentiment = predict_(answer)
     elif current_question==3 :
         sentiment=predict_(answer)
-        yorn= classifier.classify(answer)
-        print(yorn ,answer)
-        if yorn =="no":
+        # yorn= classifier.classify(answer)
+        # print(yorn ,answer)
+        if "no" in answer or ("not" in answer):
             current_question+=1
     elif current_question in [4,5]:
         sentiment=predict_(answer)
@@ -233,7 +232,12 @@ def recordanswer(answer,current_question):
     elif current_question ==11:
         current_question = 29
     elif current_question == 14:
-        if answer not in ['ok','okay']:
+        l=['yes','yeah','ok','okay']
+        flag=0
+        for i in l:
+            if i in answer.lower():
+                flag=1
+        if flag==0:
             current_question=0
     elif current_question in [15,16,17,18,19]:
         dictionary[answer]+=1
