@@ -1,0 +1,149 @@
+{% extends "botindex.html" %}
+{% block content %}
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: #333;
+        }
+
+        h1 {
+            color: #3498db;
+        }
+
+        .sessions-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .session-card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            overflow: hidden;
+            transition: transform 0.3s ease-in-out;
+cursor: pointer;
+        }
+
+        .session-card:hover {
+            transform: scale(1.05);
+        }
+
+        .session-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin: 10px 0;
+            color: #333;
+		text-overflow:ellipsis;
+        }
+
+
+
+       
+        .session-image {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        .audio-player {
+            display: none;
+            margin-top: 20px;
+        }
+    </style>
+
+    <h1>Meditation Sessions</h1>
+<div class="audio-player" id="audioPlayer">
+        <audio controls id="audioControl"></audio>
+    </div>
+    <div class="sessions-container" id="sessionsContainer"></div>
+    
+
+    <script>
+        const sessionsContainer = document.getElementById('sessionsContainer');
+        const audioPlayer = document.getElementById('audioPlayer');
+        const audioControl = document.getElementById('audioControl');
+
+        // Replace with your actual song links
+        const songLinks = [
+             "https://www.jiosaavn.com/song/rain-sounds-1-hour/GSUcBCBkUmY",
+            "https://www.jiosaavn.com/song/1-hour-lullaby/Az4Tfi0EUX0",
+            "https://www.jiosaavn.com/song/relaxing-ocean-waves-1-hour/HxgGZQZkXEk",
+            "https://www.jiosaavn.com/song/1-hour-sleep-music-for-calming-and-soothing/HF4bdD0FdFU",
+            "https://www.jiosaavn.com/song/1-hour-relaxing-mix-nature-sounds-for-sleep-study-yoga-meditation-and-escapism/Rw0MRixSUmk",
+            "https://www.jiosaavn.com/song/1-hour-spa-music-for-calming-and-soothing/Gys9fAdEYHk"
+        
+        ];
+
+        // Fetch and display details for each song
+        songLinks.forEach(songLink => {
+            fetchSongDetails(songLink);
+        });
+
+        function fetchSongDetails(songLink) {
+            // Construct the API endpoint
+            const apiEndpoint = `https://saavn.me/songs?link=${encodeURIComponent(songLink)}`;
+
+            // Fetch song details from the API
+            fetch(apiEndpoint)
+                .then(response => response.json())
+                .then(data => {
+                    // Handle the fetched data
+                    if (data.status === "SUCCESS" && data.data.length > 0) {
+                        const session = data.data[0];
+                        displaySessionCard(session);
+                    } else {
+                        console.error("Error fetching song details:", data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error("Error fetching song details:", error);
+                });
+        }
+
+        function displaySessionCard(session) {
+            // Create and append session card
+            const sessionCard = document.createElement('div');
+            sessionCard.classList.add('session-card');
+
+            const sessionTitle = document.createElement('div');
+            sessionTitle.classList.add('session-title');
+            sessionTitle.textContent = session.name;
+
+            
+           
+            sessionCard.addEventListener('click', () => playAudio(session.downloadUrl[4].link));
+
+            const sessionImage = document.createElement('img');
+            sessionImage.src = session.image[1].link;
+            sessionImage.alt = session.name;
+            sessionImage.classList.add('session-image');
+
+            sessionCard.appendChild(sessionImage);
+            sessionCard.appendChild(sessionTitle);
+
+            sessionsContainer.appendChild(sessionCard);
+        }
+
+        function playAudio(audioUrl) {
+            // Set the audio source and display the player
+            audioControl.src = audioUrl;
+            audioPlayer.style.display = 'block';
+        }
+    </script>
+{% endblock %}
+
+

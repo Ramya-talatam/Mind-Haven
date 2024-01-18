@@ -1,0 +1,117 @@
+{% extends "botindex.html" %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Goal Setting</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+       
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: #333;
+        }
+        h1 {
+            color: #555;
+        }
+
+        .goal-container {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-top: 20px;
+            width: 80%;
+            max-width: 600px;
+        }
+
+        .goal-input {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            display: inline-block;
+        }
+
+        .add-goal-button {
+            background-color: #3498db;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: inline-block;
+            vertical-align: top;
+            margin-left: revert;
+        }
+
+        .goal-list {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .goal-item {
+            background-color: #ecf0f1;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .delete-goal-button {
+            background-color: #e74c3c;
+            color: #fff;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Goal Setting</h1>
+    <div class="goal-container">
+        <input type="text" class="goal-input" placeholder="Enter your goal">
+        <button class="add-goal-button" onclick="addGoal()">Add Goal</button>
+        <ul class="goal-list" id="goalList"></ul>
+    </div>
+
+    <script>
+        const goalList = document.getElementById('goalList');
+
+        function addGoal() {
+            const goalInput = document.querySelector('.goal-input');
+            const goalText = goalInput.value.trim();
+
+            if (goalText !== '') {
+                const goalItem = document.createElement('li');
+                goalItem.className = 'goal-item';
+
+                goalItem.innerHTML = `
+                    <span>${goalText}</span>
+                    <button class="delete-goal-button" onclick="deleteGoal(this)">Delete</button>
+                `;
+
+                goalList.appendChild(goalItem);
+                goalInput.value = '';
+            }
+        }
+
+        function deleteGoal(button) {
+            const goalItem = button.closest('.goal-item');
+            goalList.removeChild(goalItem);
+        }
+    </script>
+</body>
+{% endblock %}

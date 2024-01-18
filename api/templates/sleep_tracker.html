@@ -1,0 +1,164 @@
+
+{% extends "botindex.html" %}
+
+{% block content %}
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        color: #333;
+    }
+
+    h1 {
+        color: #555;
+    }
+
+    .sleep-container {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin-top: 20px;
+        width: 80%;
+        max-width: 600px;
+    }
+
+    .slider-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .slider-label {
+        margin-bottom: 10px;
+    }
+
+    .slider {
+        -webkit-appearance: none;
+        width: 100%;
+        height: 15px;
+        border-radius: 5px;
+        background: #d3d3d3;
+        outline: none;
+        opacity: 0.7;
+        -webkit-transition: .2s;
+        transition: opacity .2s;
+    }
+
+    .slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        background: #579ffb;
+        cursor: pointer;
+    }
+
+    .slider::-moz-range-thumb {
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        background: #579ffb;
+        cursor: pointer;
+    }
+
+    .selected-hours {
+        font-size: 18px;
+        color: #333;
+    }
+
+    .track-sleep-button {
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 10px;
+        margin-left: revert;
+    }
+
+    .sleep-data {
+        margin-top: 20px;
+    }
+
+    .average-msg {
+        margin-top: 20px;
+        font-size: 18px;
+        font-weight: bold;
+        color: #579ffb;
+    }
+</style>
+
+<h1>Sleep Tracker</h1>
+<div class="sleep-container">
+    <div class="slider-container">
+        <span class="slider-label">Slide to set your sleep hours:</span>
+        <input type="range" name="sleep_hours" min="1" max="12" value="6" class="slider" id="sleepSlider" oninput="updateSelectedHours()">
+        <span class="selected-hours" id="selectedHours">Selected hours: 6</span>
+    </div>
+    <button class="track-sleep-button" onclick="trackSleep()">Track Sleep</button>
+    <div class="sleep-data" id="sleepData">
+        {% for entry in past_7_days_data %}
+                <p>You slept for {{entry.hours}} hours on {{entry.date}}.</p>
+
+        {% endfor %}
+    </div>
+    <div class="average-msg" id="averageMsg"></div>
+    
+</div>
+
+<script>
+const sleepDataContainer = document.getElementById('sleepData');
+const sleepSlider = document.getElementById('sleepSlider');
+const selectedHoursSpan = document.getElementById('selectedHours');
+const averageMsgContainer = document.getElementById('averageMsg');
+
+function trackSleep() {
+    const sleepHours = sleepSlider.value;
+    displayAverageMsg(sleepHours);
+    // Make an AJAX request to Flask to store the sleep data
+    fetch('/sleep_hours', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ hours: sleepSlider.value }),
+    })
+    .then(response => response.json())
+    .catch(error => console.error('Error:', error));
+}
+
+function updateSelectedHours() {
+    selectedHoursSpan.textContent = `Selected hours: ${sleepSlider.value}`;
+    
+}
+
+
+
+function displayAverageMsg(averageSleepHours) {
+    let message = '';
+    if (averageSleepHours < 6) {
+        message = "Your average sleep is a bit short. Try to get more rest for better health.";
+    } else if (averageSleepHours >= 6 && averageSleepHours <= 8) {
+        message = "Great! You are getting a good amount of sleep. Keep it up!";
+    } else {
+        message = "Caution! Your average sleep is on the longer side. Consider adjusting your sleep schedule.";
+    }
+
+    averageMsgContainer.textContent = message;
+}
+
+
+// displaySleepData();
+</script>
+
+{% endblock %}
+
