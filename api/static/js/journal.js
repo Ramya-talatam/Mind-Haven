@@ -2,10 +2,10 @@ function analyzeJournal() {
     var journalText = document.getElementById("journalInput").value;
     var reportElement = document.getElementById("report");
     reportElement.innerHTML = "";
-    // const journalApi = 'https://mh-backend-xi.vercel.app/analyze';
+    const journalApi = https://mind-haven.vercel.app/analyze;
     // const journalApi = '/analyze';
     // Send journal text to server for analysis
-    fetch('/analyze', {
+    fetch(journalApi, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
