@@ -1,6 +1,7 @@
 const msgerForm = get(".msger-inputarea");
     const msgerInput = get(".msger-input");
     const msgerChat = get(".msger-chat");
+    var qno=1;
 function typeWriter(txt,n)
 {
   var i = 0;
@@ -64,8 +65,9 @@ type()
             $.ajax({
                 url: '/record_answer',
                 type: 'POST',
-                data: {answer: answer},
+                data: {answer: answer,qno:qno},
                 success: function(data) {
+                  qno=data.qno;
                     botResponse();
                 }
             });
@@ -75,6 +77,7 @@ type()
            $.ajax({
                 url: '/get_question',
                 type: 'POST',
+                data:{qno:qno},
                 success: function(data) {
                     if (data.question === 'stop') {
                         var msg="Thank you for the conversation! type restart to restart the conversation";
