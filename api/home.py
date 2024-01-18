@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 import re
 # from textblob.classifiers import NaiveBayesClassifier as nb
 import string
-
+from textblob import TextBlob
 def custom_tokenize(text):
     blob = TextBlob(text)
     words = [word.lower() for word in blob.words if word not in string.punctuation]
