@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -7,7 +7,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link id="theme-link" rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/winterfrost.css') }}" />
+  <link id="theme-link" rel="stylesheet" type="text/css" href="" />
+ 
   <!-- <link rel="stylesheet" href="{{ url_for('static', filename='summernight.css') }}"> -->
   <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -20,9 +21,28 @@
     width: 150px;
     float: left;
   }
+  .loading-overlay {
+    background-color: aliceblue;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        body.loaded .loading-overlay {
+            display: none;
+        }
+        
+
 </style>
 </head>
-
+<div class="loading-overlay">
+  <img  src="../static/image/logo-white.png">
+</div>
 <div class="left-col">
     <img id="logo-white" class="logo-dim" src="../static/image/logo-white.png">
     <img id="logo-black" class="logo-dim" src="../static/image/logo-black.png">
@@ -35,10 +55,22 @@
           <a href="{{url_for('logout')}}"><img class="icon-bar" src="../static/image/icon_logout.png"></a>
       </div>
       <div id="journal-icon" class="nav-link">
-          <a href=""><img class="icon-bar" id="diary-icon" src="../static/image/icon_diary.png"></a>
+          <a href="{{url_for('chatbot')}}"><img class="icon-bar" id="diary-icon" src="../static/image/icon_diary.png"></a>
+      </div>
+<div class="nav-link">
+          <a href="{{url_for('guided_med')}}"><img class="icon-bar" src="../static/image/icon_guided_meditation.png"></a>
       </div>
       <div id="settings-icon" class="nav-link" >
           <a href=""><img class="icon-bar" src="../static/image/icon_setting.png"></a>
+      </div>
+<div class="nav-link">
+          <a href="{{url_for('sleep_hours')}}"><img class="icon-bar" src="../static/image/icon_sleep.png"></a>
+      </div>
+<div class="nav-link">
+          <a href="{{url_for('goals')}}"><img class="icon-bar" src="../static/image/icon_goals.png"></a>
+      </div>
+<div class="nav-link">
+          <a href="{{url_for('affirmations')}}"><img class="icon-bar" src="../static/image/icon_affirm.png"></a>
       </div>
       
   </nav>          
@@ -57,7 +89,6 @@
     </div>
 </div>
 <script src="../static/js/settings.js"></script>
-  <div class="firefly"></div>
 <div class="firefly"></div>
 <div class="firefly"></div>
 <div class="firefly"></div>
@@ -72,58 +103,15 @@
 <div class="firefly"></div>
 <div class="firefly"></div>
 <div class="firefly"></div>
-<section id="journal" class="journal" style="display: none;">
-	<div class="book">
-		<div class="book-cover">
-			<div>
-				<h1>Dear Diary</h1>
-				<div class="separator"></div>
-				<h2>your personal journal</h2>
-			</div>
-		</div>
-		<div class="book-content">
-			<h3> write your diary </h3>
-            <textarea id="journalInput" placeholder="Type your journal entry here..."></textarea>
-            <button  onclick="analyzeJournal()">Analyze</button>
-            <div class="report" id="report"></div>
-		</div>
-	</div>  
-</section>
-  <!-- partial:index.partial.html -->
-  <section id="msger" class="msger">
-    <header class="msger-header">
-      <div class="msger-header-title">
-        <i class="fas fa-bug"></i> Chatbot <i class="fas fa-bug"></i>
-      </div>
-    </header>
+<div class="firefly"></div>
+<div class="firefly"></div>
+<div class="firefly"></div>
+<div class="firefly"></div>
+<div class="firefly"></div>
+<div class="firefly"></div>
+  {% block content %} {%endblock%}
 
-    <main class="msger-chat">
-      
-    </main>
-    <form class="msger-inputarea">
-      <input type="text" class="msger-input" id="textInput" placeholder="Enter your message...">
-      <button type="submit" class="msger-send-btn">Send</button>
-    </form>
-  </section>
-  <!-- partial -->
-  <script src='https://use.fontawesome.com/releases/v5.0.13/js/all.js'></script>
-  <script>
-    document.getElementById('journal-icon').addEventListener('click', function() {
-      event.preventDefault();
-            if(document.getElementById('journal').style.display == 'none'){
-              document.getElementById('diary-icon').src= "../static/image/icon_calendar.png";
-              document.getElementById('journal').style.display = 'flex';
-              document.getElementById('msger').style.display = 'none';
-            }
-            else{
-              document.getElementById('journal').style.display = 'none';
-              document.getElementById('diary-icon').src= "../static/image/icon_diary.png";
-              document.getElementById('msger').style.display = 'flex';
-            }
-            
-        });
-  </script>
-<script src="../static/js/chat.js"></script>
+
 </body>
 
 </html>
