@@ -223,10 +223,10 @@ def recordanswer(answer,current_question):
             current_question+=1
     elif current_question== 9:
         # if answer.lower()=='yes':
-        if  classifier.classify(answer)=="yes":
-            current_question=9
-        else:
+        if "no" in answer or ("not" in answer):
             current_question=10
+        else:
+            current_question=9
     elif current_question == 10:
         current_question+=1
     elif current_question ==11:
