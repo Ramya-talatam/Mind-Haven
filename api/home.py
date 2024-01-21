@@ -28,13 +28,14 @@ def fun(journal_entry):
                 negative_words.append([word, word_polarity])
 
         # focused_words+=(analysis.words[:5])  # Get the first 5 words
-        for word, pos_tag in analysis.tags:
-            word_polarity = TextBlob(word).sentiment.polarity
-            if pos_tag.startswith(('NN')):
-                focused_words.append([word, word_polarity])
+        # for word, pos_tag in analysis.tags:
+            # word_polarity = TextBlob(word).sentiment.polarity
+            # if pos_tag.startswith(('NN')):
+                # focused_words.append([word, word_polarity])
         # focused_words=[i for i,j in sorted(focused_words, key= lambda x:abs(x[1]),reverse=True)][:10]
         # focused_words=[word for word, _ in sorted(focused_words, key=lambda x: x[1], reverse=True)][:10]
-    fcw=[i for i,j in sorted(focused_words, key= lambda x:abs(x[1]),reverse=True)][:10]
+    fcw=[]
+    # fcw=[i for i,j in sorted(focused_words, key= lambda x:abs(x[1]),reverse=True)][:10]
     # print(fcw)
         
 
